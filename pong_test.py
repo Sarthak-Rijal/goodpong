@@ -1,7 +1,7 @@
 import pygame,sys
 from pygame.locals import*
 from paddle_object import paddle
-from train import Train
+from generation import Generation
 from ball import Ball
 import random
 import math
@@ -20,15 +20,15 @@ screen = pygame.display.set_mode((WIDTH,HEIGHT))
 
 
 one = paddle(screen,WIDTH-SPACING-P_WIDTH,HEIGHT/2-P_LENGTH/2,HEIGHT,P_WIDTH,'one',P_SPEED)
-red = [ Train((random.randint(0,255), random.randint(0,255) ,random.randint(0,255)), screen,SPACING,random.randint(0, HEIGHT),P_LENGTH,P_WIDTH,'two',P_SPEED) for i in range(5) ]
-new_lst = []
-for i in range(10):
+#new_lst = []
+gen = Generation(200, one, screen)
+"""for i in range(10):
 	color = [100, 100, 100]
 	mod = i%3
 	color[mod] = 5*i
 	a = Train(color, screen,SPACING,random.randint(0, HEIGHT),P_LENGTH,P_WIDTH,'two',P_SPEED)
 	a.one = one
-	new_lst.append(a)
+	new_lst.append(a)"""
 
 #two = paddle(screen,SPACING,HEIGHT/2-P_LENGTH/2,P_LENGTH,P_WIDTH,'two',P_SPEED)
 #ball = Ball(screen,WIDTH/2,HEIGHT/2,20,50,50)
@@ -85,13 +85,12 @@ def play():
 			if i%25 == 0:
 				pygame.draw.rect(screen,(255,255,255),(WIDTH/2-2,i,4,10))
 		
-		for re in new_lst:
-			re.on_update()
+		gen.on_update()
 		one._draw()
 
 
-		print_f(str(one_pt),100,(255,255,255),WIDTH/4,150)
-		print_f(str(two_pt),100,(255,255,255),WIDTH/2 + WIDTH/4,150)
+		print_f(str(gen.generation),100,(255,255,255),WIDTH/4,150)
+		#print_f(str(two_pt),100,(255,255,255),WIDTH/2 + WIDTH/4,150)
 
 
 
