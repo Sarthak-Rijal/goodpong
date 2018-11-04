@@ -1,17 +1,15 @@
 import pygame
 import math
 import numpy as np
+from model import forward_model, nn, format_weight_array
 pygame.init()
 
 WIDTH = 858
 HEIGHT = 525
 MAXSPEED = 10
 
-def forward_model(A, x):
-    return np.tanh(np.dot(A, x))
-
-def prepare_features(ball_dx, ball_dy, y_ball, y_paddle, x_ball):
-    return np.array([ball_dy/MAXSPEED, ball_dx/MAXSPEED, (y_ball-y_paddle)/HEIGHT, y_paddle/HEIGHT, x_ball/WIDTH])
+def prepare_features(ball_dx, ball_dy, y_ball, y_paddle):
+    return np.array([ball_dy/MAXSPEED, ball_dx/MAXSPEED, (y_ball-y_paddle)/HEIGHT, y_paddle/HEIGHT])
     
 
 class paddle(object):
@@ -50,11 +48,12 @@ class paddle(object):
         self._draw(color=color)
 
     def move_ai(self, ball):
-        X = prepare_features(ball.x_speed, ball.y_speed, ball.y, self.y, ball.x)
-        decision = forward_model(self.weights, X)
-        if decision > 0.0:
+        X = prepare_features(ball.x_speed, ball.y_speed, ball.y, self.y)
+        A, B, C, D = format_weight_array(self.weights)
+        decision = nn(A, B, C, D, X)
+        if decision > 0.01:
             self._move_up()
-        elif decision < 0.0:
+        elif decision < -0.01:
             self._move_down()
         self._draw()
 

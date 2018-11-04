@@ -1,5 +1,5 @@
-import numpy as np
 import random
+import numpy as np
 
 """
 fitness = # num of times it bounces
@@ -26,12 +26,9 @@ A mutation operation which determines how random deviations manifest themselves
 #inital population is randomly generated A's
 #we then run through each one calculate fitness
 
-def forward_model(A, x):
-    return np.tanh(np.dot(A, x))
-
 class Gene(object):
     n = 8
-    var = 5
+    var = 19
     weight_min = -1
     weight_max = 1
     def __init__(self, alleles=None):
