@@ -6,20 +6,30 @@ import random
 import math
 pygame.init()
 
-
+#screen settings
 WIDTH = 858
 HEIGHT = 525
 SPACING = 25
+
+#paddle settings
 P_LENGTH = 100
 P_WIDTH = 15
 P_SPEED = 10
+
+#Speed and angle of the bounce
 MAXBOUNCEANGLE = math.pi/4
 MAXSPEED = 10
+
+#initilizes the screen
 screen = pygame.display.set_mode((WIDTH,HEIGHT))
 
+#sets up paddles
 one = paddle(screen,WIDTH-SPACING-P_WIDTH,HEIGHT/2-P_LENGTH/2,P_LENGTH,P_WIDTH,'one',P_SPEED)
 two = paddle(screen,SPACING,HEIGHT/2-P_LENGTH/2,P_LENGTH,P_WIDTH,'two',P_SPEED)
-ball = Ball(screen,WIDTH/2,HEIGHT/2,20,50,50)
+
+
+for i in range(50):
+	ball = Ball(screen,WIDTH/2,HEIGHT/2,20,50,50)
 
 
 
@@ -116,14 +126,14 @@ def play():
 		#collisions	
 		if ball.collide(pygame.Rect(one.x,one.y,one.width,one.length)):
 			one_sound.play()
-			ball.bounce(MAXSPEED,MAXBOUNCEANGLE,one)
+			ball.bounce(MAXBOUNCEANGLE,one)
 			
 			#ball.bounce(ball_v,"one")
 			#ball.bounce_normal(808,ball_v,one)
 
 		elif ball.collide(pygame.Rect(two.x,two.y,two.width,two.length)):
 			two_sound.play()
-			ball.bounce(MAXSPEED,MAXBOUNCEANGLE,two)
+			ball.bounce(MAXBOUNCEANGLE,two)
 		
 		print_f(str(one_pt),100,(255,255,255),WIDTH/4,150)
 		print_f(str(two_pt),100,(255,255,255),WIDTH/2 + WIDTH/4,150)

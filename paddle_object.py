@@ -15,6 +15,7 @@ class paddle(object):
 		self.player = player
 		self.screen = screen
 		self.speed = speed
+		
 
 		
 
